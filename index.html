@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CAPapp</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        body { background-color: #121212; color: #FFFFFF; font-family: sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .logo { width: 100%; max-width: 250px; height: 150px; margin-top: 20px; object-fit: contain; }
+        h1 { font-size: 24px; margin-bottom: 5px; }
+        p { color: #BBBBBB; margin-bottom: 30px; }
+        
+        .card { width: 100%; max-width: 350px; height: 80px; border-radius: 12px; margin-bottom: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-decoration: none; border: none; font-family: sans-serif; }
+        .card:active { opacity: 0.7; }
+        
+        .card-title { font-weight: bold; font-size: 16px; }
+        .card-subtitle { font-size: 11px; margin-top: 4px; opacity: 0.8; }
+
+        .bg-ligar { background-color: #333333; color: white; }
+        .bg-msg { background-color: #999999; color: black; }
+        .bg-insta { background-color: #E1306C; color: white; }
+        .bg-mapa { background-color: #2E7D32; color: white; }
+
+        /* Estilo do Formulário */
+        #formulario { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; padding: 20px; box-sizing: border-box; z-index: 10; }
+        input, textarea { width: 100%; padding: 15px; margin: 10px 0; border-radius: 8px; border: none; font-size: 16px; }
+        .btn-enviar { background: #A8A8A8; color: white; width: 100%; padding: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; margin-top: 10px; }
+        .btn-voltar { background: none; color: #BBBBBB; border: none; font-size: 16px; cursor: pointer; padding: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <img src="logo_cap_nova.png" class="logo">
+    <h1>Atendimento Pastoral</h1>
+    <p>Pastor Elias Montenegro</p>
+
+    <a href="tel:+351927787071" class="card bg-ligar">
+        <span class="card-title">LIGAR PARA O PASTOR</span>
+        <span class="card-subtitle">CHAMAR AGORA</span>
+    </a>
+
+    <div onclick="abrirForm()" class="card bg-msg">
+        <span class="card-title">SOLICITAR MENSAGEM</span>
+        <span class="card-subtitle">ENVIAR PEDIDO</span>
+    </div>
+
+    <a href="https://www.instagram.com/cap_porto?igsh=eXA5aDN0a254dTdn" target="_blank" class="card bg-insta">
+        <span class="card-title">INSTAGRAM CAP</span>
+        <span class="card-subtitle">@cap_porto</span>
+    </a>
+
+    <a href="https://maps.app.goo.gl/xtJRwFMZQww4V6ou7?g_st=ac" target="_blank" class="card bg-mapa">
+        <span class="card-title">ONDE ESTAMOS</span>
+        <span class="card-subtitle">ABRIR NO MAPA</span>
+    </a>
+
+    <div id="formulario">
+        <button class="btn-voltar" onclick="fecharForm()">← VOLTAR</button>
+        <h2 style="text-align:center">PEDIDO DE ATENDIMENTO</h2>
+        <input type="text" id="nome" placeholder="Seu Nome">
+        <input type="tel" id="telefone" placeholder="Seu Telemóvel">
+        <textarea id="causa" rows="4" placeholder="Motivo do atendimento"></textarea>
+        <button class="btn-enviar" onclick="enviar()">ENVIAR VIA WHATSAPP</button>
+    </div>
+
+    <script>
+        function abrirForm() { document.getElementById('formulario').style.display = 'block'; }
+        function fecharForm() { document.getElementById('formulario').style.display = 'none'; }
+        
+        function enviar() {
+            const n = document.getElementById('nome').value;
+            const t = document.getElementById('telefone').value;
+            const c = document.getElementById('causa').value;
+            if(!n || !t || !c) { alert("Preencha tudo!"); return; }
+            
+            const msg = `O irmão ${n} (${t}) pede atendimento pastoral: ${c}`;
+            window.location.href = `https://api.whatsapp.com/send?phone=351927787071&text=${encodeURIComponent(msg)}`;
+        }
+    </script>
+</body>
+</html>
